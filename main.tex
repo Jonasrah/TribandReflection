@@ -1,0 +1,49 @@
+\documentclass[a4paper]{article}
+\usepackage{apacite}
+\usepackage{pdfpages}
+\usepackage{titling}
+
+\setlength{\droptitle}{0em}   % This is your set screw
+
+\usepackage{datatool}% http://ctan.org/pkg/datatool
+\newcommand{\sortitem}[1]{%
+  \DTLnewrow{list}% Create a new entry
+  \DTLnewdbentry{list}{description}{#1}% Add entry as description
+}
+\newenvironment{sortedlist}{%
+  \DTLifdbexists{list}{\DTLcleardb{list}}{\DTLnewdb{list}}% Create new/discard old list
+}{%
+  \DTLsort{description}{list}% Sort list
+  \begin{itemize}%
+    \DTLforeach*{list}{\theDesc=description}{%
+      \item \theDesc}% Print each item
+  \end{itemize}%
+}
+
+\bibliographystyle{apacite}
+
+\title{Project-oriented Course with Triband: \\
+  \large A Reflection Report}
+\author{Jonas Haugesen}
+\date{December 2017}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\input{Sections/Intro.tex}
+
+\input{Sections/Formalities.tex}
+
+\input{Sections/ProjectsMeta.tex}
+
+\input{Sections/ProjectsSummary.tex}
+
+\input{Sections/Reflection.tex}
+
+\newpage
+\bibliography{bib}
+
+\end{document}
